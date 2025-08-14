@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+
+    // Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": true, // <-- Required if using `allowImportingTsExtensions`
+    "allowImportingTsExtensions" :true,
+
+    // Type Support
+    "types": ["playwright", "node"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+
+    // Optional Type Safety
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedSideEffectImports": true,
+
+    // JSX Support (for React, if needed)
+    "jsx": "react-jsx",
+
+    // Module detection behavior
+    "moduleDetection": "force"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}
