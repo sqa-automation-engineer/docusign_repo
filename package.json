@@ -16,5 +16,8 @@
   "directories": {
     "test": "tests"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "axios": "^1.12.0"
+  }
 }
