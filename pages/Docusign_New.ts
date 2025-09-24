@@ -68,6 +68,14 @@ export class DocumentPage {
   readonly StampCircle: Locator;
   readonly StampNext: Locator;
   readonly AdoptNewStamp: Locator;
+  readonly checkBox: Locator;
+  readonly ZoomIN: Locator;
+  readonly zoomLvl: Locator;
+  readonly ZoomOut: Locator;
+  readonly downloadDoc: Locator;
+  readonly CombinedPDFs: Locator;
+  readonly companyName: Locator;
+  readonly companyTextfield: Locator;
 
 
   constructor(page: Page) {
@@ -152,6 +160,16 @@ export class DocumentPage {
     this.StampNext = page.locator("//button[@id='adopt-stamp-confirm']");
     this.AdoptNewStamp = page.locator("//button[@id='adopt-stamp-confirm']");
 
+    //CheckBox
+    this.checkBox = page.locator("//button[@data-qa='Checkbox']//span[contains(text(),'Checkbox')]");
+    this.ZoomIN = page.locator("//button[@aria-label='Zoom in']")
+    this.zoomLvl = page.locator("//span[@role='status']");
+    this.ZoomOut = page.locator("//button[@aria-label='Zoom out']");
+    this.downloadDoc = page.locator("//button[@aria-label='Download']");
+    this.CombinedPDFs = page.locator("//span[@aria-hidden='true'][normalize-space()='Combined PDF']");
+    this.companyName = page.locator("//button[@data-qa='Company']//span[contains(text(),'Company')]");
+    this.companyTextfield = page.locator("//div[@id='tab-1e18449f-3094-445f-9529-f0b9a6d47582']");
+  
   }
   async OpenDocusign(){
     await this.page.goto("https://account.docusign.com/");
@@ -186,59 +204,7 @@ export class DocumentPage {
     await this.ViewerContainer.click();
 
   }
-  // async drawSignature() {
-  //   const box = await this.canvas.boundingBox();
-  //   if (box) {
-  //     // Adjust starting baseline
-  //     const baseY = box.y + box.height / 2;
-  //     let startX = box.x + 20;
-
-  //     // Letter S
-  //     await this.page.mouse.move(startX, baseY - 20);
-  //     await this.page.mouse.down();
-  //     await this.page.mouse.move(startX + 20, baseY - 40);
-  //     await this.page.mouse.move(startX + 40, baseY - 20);
-  //     await this.page.mouse.move(startX + 20, baseY);
-  //     await this.page.mouse.move(startX, baseY + 20);
-  //     await this.page.mouse.up();
-
-  //     startX += 60; // space to next letter
-
-  //     // Letter i
-  //     await this.page.mouse.move(startX, baseY);
-  //     await this.page.mouse.down();
-  //     await this.page.mouse.move(startX, baseY - 60);
-  //     await this.page.mouse.up();
-
-  //     // dot of i
-  //     await this.page.mouse.move(startX, baseY - 40);
-  //     await this.page.mouse.down();
-  //     await this.page.mouse.move(startX + 1, baseY - 40);
-  //     await this.page.mouse.up();
-
-  //     startX += 30;
-
-  //     // Letter g
-  //     await this.page.mouse.move(startX, baseY - 10);
-  //     await this.page.mouse.down();
-  //     await this.page.mouse.move(startX + 20, baseY);
-  //     await this.page.mouse.move(startX, baseY + 20);
-  //     await this.page.mouse.move(startX + 20, baseY + 30);
-  //     await this.page.mouse.up();
-
-  //     startX += 50;
-
-  //     // Letter n
-  //     await this.page.mouse.move(startX, baseY + 20);
-  //     await this.page.mouse.down();
-  //     await this.page.mouse.move(startX, baseY - 20);
-  //     await this.page.mouse.move(startX + 20, baseY);
-  //     await this.page.mouse.move(startX + 40, baseY - 20);
-  //     await this.page.mouse.up();
-  //   } else {
-  //     throw new Error('Canvas not found for signature');
-  //   }
-  // }
+  
   async drawSignature() {
   const box = await this.canvas.boundingBox();
   if (box) {
@@ -462,7 +428,7 @@ export class DocumentPage {
   }
 
   async finishSigning(){
-// Still Pending
+    // Still Pending
   }
 
   async VerifyRirectToAgreement(){
@@ -481,26 +447,44 @@ export class DocumentPage {
     await this.pageDocument.click({ position: { x: 400, y: 300 } });
     await this.fullName.click();
     await this.pageDocument.click({ position: { x: 100, y: 310 } });
-    // await this.stampTool.click();
-    // await this.pageDocument.click({ position: { x: 600, y: 350 } });
-
+    await this.companyName.click();
+    await this.pageDocument.click({ position: { x: 100, y: 410 } });
+    await this.stampTool.click();
+    await this.pageDocument.click({ position: { x: 600, y: 350 } });
+    await this.page.mouse.wheel(0, 500)
+    await this.page.waitForTimeout(1500);
+    await this.checkBox.click();
+    await this.pageDocument.click({ position: { x: 100, y: 600 } })
   }
   async AddStampAnnotation(){
     await this.placedStampAnnotation.click();
-    await this.AddNew.click();
-    await this.CreateNewStamp.click();
-    await this.StampText.fill("MUHAMMAD");
-    await this.StampTextTitle.fill("MA");
-    await this.StampSquare.click();
-    await this.StampCircle.click();
-    await this.StampNext.click();
-    await this.AdoptNewStamp.click();
-    // await this.existingStamp.click();
-    // await this.doneBtn.click();
+    //For New
+    // await this.AddNew.click();
+    // await this.CreateNewStamp.click();
+    // await this.StampText.fill("MUHAMMAD");
+    // await this.StampTextTitle.fill("MA");
+    // await this.StampSquare.click();
+    // await this.StampCircle.click();
+    // await this.StampNext.click();
+    // await this.AdoptNewStamp.click();
+    // for Existing Stamp
+    await this.existingStamp.click();
+    await this.doneBtn.click();
 
     //Add text annotation
     await this.TextAnnotation.click();
     await this.pageDocument.click({ position: { x: 600, y: 450 } });
     await this.textBox1.fill('Hello, this is a test annotation');
+    //Zoom Level
+
+    await this.ZoomIN.click();
+    await expect(this.zoomLvl).toHaveText("156%");
+    await this.ZoomIN.click();
+    await this.ZoomOut.click();
+    await this.downloadDoc.click();
+    await this.CombinedPDFs.click();
+  
   }
+
+  
 }
